@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>جستجوی محصولات</title>
+</head>
+<body>
+    <h1>جستجوی محصولات</h1>
+    <form method="get" action="{% url 'search' %}">
+        {{ form.as_p }}
+        <button type="submit">جستجو</button>
+    </form>
+
+    {% if query %}
+        <h2>نتایج برای "{{ query }}":</h2>
+        <ul>
+            {% for result in results %}
+                <li>
+                    <h3>{{ result.name }}</h3>
+                    <p>{{ result.description }}</p>
+                    {% if result.images.first.image_url %}
+                        <img src="{{ result.images.first.image_url }}" alt="{{ result.name }}" width="100">
+                    {% endif %}
+                    <p>Price: {{ result.current_price }}</p>
+                    <p>Category: {{ result.category_name }}</p>
+                    <p>Brand: {{ result.brand_name }}</p>
+                    <p>Score: {{ result.score }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
